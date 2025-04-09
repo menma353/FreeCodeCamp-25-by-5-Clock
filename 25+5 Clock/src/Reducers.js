@@ -1,5 +1,6 @@
 import { combineReducers } from "redux"
 
+
 const timeChanger = (time, response) => {
     const times = time.split(':')
     if(response === 'add'){
@@ -13,10 +14,10 @@ const timeChanger = (time, response) => {
 }
 
 const timer = (time) => {
-    const [minutes, seconds] = time.split(':')
+    let [minutes, seconds] = time.split(':')
     minutes = Number(minutes)
     seconds = Number(seconds)
-    if(seconds === '00' && minute > 0){
+    if(seconds === 0  && minutes > 0){
         minutes = minutes - 1
         seconds = '59' 
     }
@@ -26,7 +27,7 @@ const timer = (time) => {
     else{
         seconds = seconds - 1
     }
-    return `${minutes}:${seconds}`
+    return seconds >= 0 && seconds < 10 ? `${minutes}:0${seconds}` :`${minutes}:${seconds}`
 }
 
 const breakReducer = (state = '5:00', action) => {
@@ -64,29 +65,35 @@ const sessionReducer = (state = '25:00', action) => {
             }
         case 'SESSION_DECREMENT':
             if(Number(action.value.split(':')[0]) > 1 && Number(action.value.split(':')[0] < 60)){
+                console.log(action.value)
                 return timeChanger(action.value, "minus")
             }
             else{
                 return state
             }
+        case 'START_TIMER_SESSION':
+            console.log(action.value)
+            return timer(action.value)
         default:
             return state
     }
 }
 
-const timeReducer = (state = '25:00', action) => {
+/*const timeReducer = (state = '25:00', action) => {
+    
     switch(action.type){
         case 'START_TIMER':
+            console.log(timer(action.value))
             return timer(action.value)
         default:
             return state
 
-    }
-}
+    }*/
+
 
 const allReducers = combineReducers({
     breakTime: breakReducer,
-    sessionTime: sessionReducer
+    sessionTime: sessionReducer,
 })
 
 
