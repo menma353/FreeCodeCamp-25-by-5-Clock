@@ -71,6 +71,9 @@ const sessionReducer = (state = '25:00', action) => {
             else{
                 return state
             }
+        case 'SET_SESSION':
+            console.log(action.value)
+            return action.value
         /*case 'START_TIMER_SESSION':
             
             return timer(action.value)*/
