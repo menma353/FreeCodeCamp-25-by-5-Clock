@@ -30,7 +30,7 @@ const timer = (time) => {
     return seconds >= 0 && seconds < 10 ? `${minutes}:0${seconds}` :`${minutes}:${seconds}`
 }
 
-const breakReducer = (state = '5:00', action) => {
+const breakReducer = (state = '0:05', action) => {
     switch(action.type){
         case 'BREAK_INCREMENT':
             if(Number(action.value.split(':')[0]) > 1 && Number(action.value.split(':')[0] < 60)){
@@ -48,12 +48,15 @@ const breakReducer = (state = '5:00', action) => {
             else{
                 return state
             }
+        case 'SET_BREAK':
+            console.log(action.value)
+            return action.value
         default:
             return state
     }
 }
 
-const sessionReducer = (state = '25:00', action) => {
+const sessionReducer = (state = '0:15', action) => {
     switch(action.type){
         case 'SESSION_INCREMENT':
             if(Number(action.value.split(':')[0]) > 1 && Number(action.value.split(':')[0] < 60)){
@@ -72,7 +75,6 @@ const sessionReducer = (state = '25:00', action) => {
                 return state
             }
         case 'SET_SESSION':
-            console.log(action.value)
             return action.value
         /*case 'START_TIMER_SESSION':
             
