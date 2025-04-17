@@ -63,6 +63,10 @@ nav{
   cursor: pointer;
 }
 
+.btn:active{
+  color: #1D1A1A
+}
+
 .play{
   font-size: 20px;
 }
