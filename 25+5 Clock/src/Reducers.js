@@ -5,10 +5,16 @@ const timeChanger = (time, response) => {
     const times = time.split(':')
     if(response === 'add'){
         times[0] = Number(times[0]) + 1
+        if(Number(times[0]) < 10){
+            times[0] = `0${times[0]}`
+        }
         return times.join(':') 
     }
     else if(response === 'minus'){
         times[0] = Number(times[0]) - 1
+        if(Number(times[0]) < 10){
+            times[0] = `0${times[0]}`
+        }
         return times.join(':') 
     }
 }
@@ -27,13 +33,16 @@ const timer = (time) => {
     else{
         seconds = seconds - 1
     }
+    if(minutes < 10){
+        minutes = `0${minutes}`
+    }
     return seconds >= 0 && seconds < 10 ? `${minutes}:0${seconds}` :`${minutes}:${seconds}`
 }
 
-const breakReducer = (state = '0:05', action) => {
+const breakReducer = (state = '05:00', action) => {
     switch(action.type){
         case 'BREAK_INCREMENT':
-            if(Number(action.value.split(':')[0]) > 1 && Number(action.value.split(':')[0] < 60)){
+            if(Number(action.value.split(':')[0] < 60)){
                 return timeChanger(action.value, "add")
                 
             }
@@ -41,7 +50,7 @@ const breakReducer = (state = '0:05', action) => {
                 return state
             }
         case 'BREAK_DECREMENT':
-            if(Number(action.value.split(':')[0]) > 1 && Number(action.value.split(':')[0] < 60)){
+            if(Number(action.value.split(':')[0]) > 1){
                 return timeChanger(action.value, "minus")
                 
             }
@@ -56,10 +65,10 @@ const breakReducer = (state = '0:05', action) => {
     }
 }
 
-const sessionReducer = (state = '0:15', action) => {
+const sessionReducer = (state = '25:00', action) => {
     switch(action.type){
         case 'SESSION_INCREMENT':
-            if(Number(action.value.split(':')[0]) > 1 && Number(action.value.split(':')[0] < 60)){
+            if(Number(action.value.split(':')[0] < 60)){
                 return timeChanger(action.value, "add")
                 
             }
@@ -67,7 +76,7 @@ const sessionReducer = (state = '0:15', action) => {
                 return state
             }
         case 'SESSION_DECREMENT':
-            if(Number(action.value.split(':')[0]) > 1 && Number(action.value.split(':')[0] < 60)){
+            if(Number(action.value.split(':')[0]) > 1){
                 console.log(action.value)
                 return timeChanger(action.value, "minus")
             }

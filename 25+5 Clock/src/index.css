@@ -83,7 +83,7 @@ nav{
 
 .display{
   border: 2px solid black;
-  border-radius: 10px;
+  border-radius: 30px;
   background-color: #CCBEBE; 
   background-image: linear-gradient(to right, #CCBEBE , #A0A0A0);
 }
