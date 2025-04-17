@@ -73,7 +73,7 @@ function Timer(){
     const [play, setPlay] = useState(false)
 
     useEffect(() => {
-        setPlay((value) => value)
+        setPlay(() => played.current)
     }, [play]);
 
     //To tell if the timer is to llop or continue from a pause
@@ -147,7 +147,7 @@ function Timer(){
                     }
                 }
                 else{
-                    if(thisTime === 0){
+                    if(thisTime === 0 && play){
                         clearInterval(thisTimer)
                         beep()
                         setValid(false)
@@ -184,7 +184,7 @@ function Timer(){
                     }
                 }
                 else{
-                    if(thisTime === 0){
+                    if(thisTime === 0 && play){
                         clearInterval(thisTimer)
                         beep()
                         setValid(false)
@@ -238,8 +238,6 @@ function Timer(){
             setTimerWorking(false)
             setRefresh(true)
             setType('session')
-            setPlay(false)
-            setPlayed(false)
             console.log("Refresh ", refresh.current)
             myTimer(thisTime, type.current)
         }
@@ -265,9 +263,13 @@ function Timer(){
 
     function reset(){
         console.log("Doing refresh")
+        setPlay(false)
+        setPlayed(false)
+        setRefresh(false)
         dispatch(actions.sessionTimer("25:00", "SET_SESSION"))
         dispatch(actions.breakTimer("5:00", "SET_BREAK"))
         document.getElementById('time-left').textContent = '25:00'
+        console.log("Play", play, "Played ", played.current, session)
     }    
 
 
@@ -321,7 +323,7 @@ function Timer(){
             <div class='display-body'>
                 <div class='display'>
                     <p id='timer-label'>Session</p>
-                    <p id='time-left'>{play ? subTime.current : session}</p>
+                    <p id='time-left'>{played.current ? subTime.current : session}</p>
                 </div>
                 <div class='play-pause'>
                     {timerWorking.current ? 
