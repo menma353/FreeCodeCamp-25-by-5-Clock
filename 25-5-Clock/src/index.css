@@ -59,12 +59,12 @@ nav{
 }
 
 .btn:hover{
-  color: white;
+  color: rgb(229, 255, 234);
   cursor: pointer;
 }
 
 .btn:active{
-  color: #1D1A1A
+  color: #686666
 }
 
 .play{

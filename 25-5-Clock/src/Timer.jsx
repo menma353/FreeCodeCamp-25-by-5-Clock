@@ -120,8 +120,6 @@ function Timer(){
     }
     
     const myTimer = (thisTime, type) => {
-        setPlayed(true)
-        setPlay(true)
         console.log(valid.current, prevSession.current)
         if(valid.current){
             p = type === 'session' ? session  : theBreak
@@ -140,7 +138,7 @@ function Timer(){
                         reset()
                         
                     }
-                    else{
+                    else if(played.current){
                         setValid(true)
                         dispatch(actions.sessionTimer(p, "SET_SESSION"))
                         setSubTime(p)
@@ -176,7 +174,7 @@ function Timer(){
                     if(refresh.current){
                         reset()
                     }
-                    else{
+                    else if(played.current){
                         setValid(true)
                         dispatch(actions.breakTimer(p, "SET_BREAK"))
                         setSubTime(p)
@@ -227,6 +225,8 @@ function Timer(){
             setTimerWorking(true)
             setRefresh(false)
             console.log("True" ,timerWorking.current)
+            setPlayed(true)
+            setPlay(true)
             myTimer(thisTime, type.current)
             
         } 
@@ -266,6 +266,9 @@ function Timer(){
         setPlay(false)
         setPlayed(false)
         setRefresh(false)
+        setValid(false)
+        setPrevBreak("5:00")
+        setPrevSession('25:00')
         dispatch(actions.sessionTimer("25:00", "SET_SESSION"))
         dispatch(actions.breakTimer("5:00", "SET_BREAK"))
         document.getElementById('time-left').textContent = '25:00'
